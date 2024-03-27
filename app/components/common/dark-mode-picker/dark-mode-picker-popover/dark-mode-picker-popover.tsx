@@ -13,7 +13,10 @@ import { useTernaryDarkMode } from "~/hooks/use-ternary-dark-mode"
 export default function DarkModePickerPopover() {
   const [open, setOpen] = useState(false)
 
-  const ternaryProps = useTernaryDarkMode({initializeWithValue: false, defaultValue: "system"})
+  const ternaryProps = useTernaryDarkMode({
+    initializeWithValue: false,
+    defaultValue: "system",
+  })
 
   const { ternaryDarkMode } = ternaryProps
 

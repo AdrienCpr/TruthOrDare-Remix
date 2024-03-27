@@ -1,5 +1,5 @@
 {
-  "name": "truth_or_dart",
+  "name": "truth_or_dart-cfdb",
   "private": true,
   "sideEffects": false,
   "type": "module",
@@ -8,7 +8,6 @@
     "dev": "remix vite:dev",
     "dev:serve": "binode --require ./mocks -- @remix-run/serve:remix-serve ./build/server/index.js",
     "format": "prettier --write .",
-    "format:repo": "npm run format && npm run lint -- --fix",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "",
     "start": "remix-serve ./build/server/index.js",
