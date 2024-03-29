@@ -3,6 +3,7 @@ import { installGlobals } from "@remix-run/node"
 import { defineConfig } from "vite"
 import { cjsInterop } from "vite-plugin-cjs-interop"
 import tsconfigPaths from "vite-tsconfig-paths"
+import { vercelPreset } from '@vercel/remix/vite';
 
 installGlobals()
 
@@ -18,6 +19,8 @@ export default defineConfig({
   plugins: [
     !isStorybook &&
       remix({
+        presets:
+          [vercelPreset()],
         ignoredRouteFiles: ["**/*.css"],
       }),
     tsconfigPaths(),

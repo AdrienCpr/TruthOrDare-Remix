@@ -17,8 +17,8 @@ export default function DarkModePicker({
   useTernaryDarkModeOutput,
 }: DarkModePickerProps) {
   const { ternaryDarkMode, setTernaryDarkMode } =
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     useTernaryDarkModeOutput ??
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useTernaryDarkMode({ initializeWithValue: false, defaultValue: "system" })
 
   type TernaryDarkMode = typeof ternaryDarkMode
