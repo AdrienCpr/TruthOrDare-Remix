@@ -5,13 +5,13 @@ import type { MetaFunction } from "@remix-run/node"
 // import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 
 import { Link } from "@remix-run/react"
-import { useState } from "react"
+import { SetStateAction, useState } from "react"
 
 import DarkModePicker from "~/components/common/dark-mode-picker/dark-mode-picker"
-import FormPlayers from "~/components/common/form/players"
-import {  buttonVariants } from "~/components/common/ui/button"
-import { Toggle } from "~/components/common/ui/toggle"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/common/ui/select"
 
+import FormPlayers from "~/components/common/form/players"
+import { buttonVariants } from "~/components/common/ui/button"
 
 // import { useOptionalUser } from "~/utils"
 
@@ -25,8 +25,9 @@ export default function Index() {
 
 
   //Début logique FormPlayers
-  const [players, setPlayers] = useState([{id: 1,value: "",isMale: true}])
+  const [players, setPlayers] = useState([{ id: 1, value: "", isMale: true }])
   const [numberQuestion, setNumberQuestion] = useState(-1)
+  const [typeQuestion, setTypeQuestion] = useState("")
 
   const addPlayer = () => {
     const newItem = {
@@ -60,11 +61,10 @@ export default function Index() {
     })
   }
   //Fin logique FormPlayers
-  const handleToggleQuestionChange = () => {
-    numberQuestion === -1 ?
-      setNumberQuestion(0)
-      :
-      setNumberQuestion(-1)
+
+  const handleTypeQuestionChange = (e: SetStateAction<string>) => {
+    setTypeQuestion(e === "random" ? "" : e)
+    console.log(e)
   }
 
   return (
@@ -73,13 +73,19 @@ export default function Index() {
         <DarkModePicker />
       </div>
       <div className="relative flex min-h-full flex-col justify-center">
-        {/*<h1>Number of questions</h1>*/}
-        {/*<Toggle*/}
-        {/*  onClick={() => handleToggleQuestionChange()}*/}
-        {/*  className="bg-blue-500 data-[state=on]:bg-pink-500 data-[state=on]:text-accent-foreground"*/}
-        {/*>*/}
-        {/*  {numberQuestion === -1 ? <span>♾</span> : <span></span>}*/}
-        {/*</Toggle>*/}
+        <div>
+          <Select onValueChange={e => handleTypeQuestionChange(e)} defaultValue={typeQuestion}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select Type of Questions" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="random">Random Questions</SelectItem>
+              <SelectItem value="PG">Soft Questions</SelectItem>
+              <SelectItem value="PG13">Medium Questions</SelectItem>
+              <SelectItem value="R">Hot Questions</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <FormPlayers
           players={players}
           addPlayer={addPlayer}
@@ -91,7 +97,7 @@ export default function Index() {
           <Link
             to={{
               pathname: "/game",
-              search: `?players=${encodeURIComponent(JSON.stringify(players))}&gameParams=${encodeURIComponent(JSON.stringify({ numberOfQuestion: numberQuestion }))}`
+              search: `?players=${encodeURIComponent(JSON.stringify(players))}&gameParams=${encodeURIComponent(JSON.stringify({ numberQuestion: numberQuestion, typeQuestion: typeQuestion }))}`
             }}
             className={buttonVariants()}
           >

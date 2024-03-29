@@ -13,6 +13,7 @@ export default function InterfaceQuestion({ question, handleNextTurn }: Question
   return (
     <div className="flex-row">
       <h1>{question?.translations.fr}</h1>
+      <h4>{question?.question}</h4>
       <Button onClick={handleNextTurn}>Next turn</Button>
     </div>
   )
