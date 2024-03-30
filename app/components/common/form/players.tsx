@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Trash } from "lucide-react";
 import React from "react"
 
 import { Button } from "~/components/common/ui/button"
 import { Input } from "~/components/common/ui/input"
 import { Toggle } from "~/components/common/ui/toggle"
+import { ScrollArea } from "../ui/scroll-area";
 
 interface Player {
   id: number;
@@ -27,33 +29,35 @@ const FormPlayers: React.FC<FormPlayersProps> = ({
   handleToggleChange
 }) => {
   return (
-    <div>
-      <h1> Truth or Dare</h1>
-      <h3>List of Players :</h3>
-      {players.map((player, i) => (
-        <div key={player.id} className="flex items-center space-x-4 mb-3">
-          <Input
-            key={player.id}
-            placeholder={"Player name"}
-            onChange={e => handleChange(e, i)}
-            value={player.value}
-            type="text"
-            /*@ts-ignore*/
-            size="40"
-          />
-          <Toggle
-            onClick={() => handleToggleChange(i)}
-            className="bg-blue-500 data-[state=on]:bg-pink-500 data-[state=on]:text-accent-foreground"
-          >
-            {player.isMale ? <span>♂️</span> : <span>♀️</span>}
-          </Toggle>
-          {players.length !== 1 ? (
-            <Button onClick={() => removePlayer(i)}>🚮</Button>
-          ) : null}
-        </div>
-      ))}
-      <Button onClick={addPlayer}>+</Button>
-    </div>
+    <>
+      <h3 className="my-4 text-xl">Joueurs</h3>
+      <div>
+        {players.map((player, i) => (
+          <div key={player.id} className="flex items-center space-x-4 mb-3">
+            <Input
+              key={player.id}
+              placeholder="Nom du joueur"
+              onChange={e => handleChange(e, i)}
+              value={player.value}
+              type="text"
+              /*@ts-ignore*/
+            />
+            <Toggle
+              onClick={() => handleToggleChange(i)}
+              className="bg-blue-500 data-[state=on]:bg-pink-500 data-[state=on]:text-accent-foreground"
+            >
+              {player.isMale ? <span>♂️</span> : <span>♀️</span>}
+            </Toggle>
+            {players.length !== 1 ? (
+              <Button variant="destructive" size="sm" onClick={() => removePlayer(i)}>
+                <Trash className="h-4 w-4" />
+              </Button>
+            ) : null}
+          </div>
+        ))}
+      </div>
+      <Button variant="ghost" onClick={addPlayer}>+ Ajouter un joueur</Button>
+    </>
   );
 }
 

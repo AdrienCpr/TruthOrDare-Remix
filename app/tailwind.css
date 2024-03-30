@@ -4,25 +4,41 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 346.8 77.2% 49.8%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 346.8 77.2% 49.8%;
+    /* Name: custom color palette
+       Author: Ilias Ism
+       URL: https://gradient.page */
+
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --gradient: linear-gradient(to top left,#FC00FF,#00DBDE);
+
+    --background: 318 65% 4%;
+    --foreground: 318 10% 97.5%;
+
+    --muted: 318 50% 15%;
+    --muted-foreground: 318 10% 55%;
+
+    --popover: 318 45% 6.5%;
+    --popover-foreground: 318 10% 97.5%;
+
+    --card: 214 20.400000000000006% 92.5%;
+    --card-foreground: 318 10% 97.5%;
+
+    --border: 318 50% 15%;
+    --input: 318 50% 15%;
+
+    --primary: 318 100% 50%;
+    --primary-foreground: 318 10% 5%;
+
+    --secondary: 318 50% 15%;
+    --secondary-foreground: 318 10% 97.5%;
+
+    --accent: 318 50% 15%;
+    --accent-foreground: 318 10% 97.5%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 318 10% 97.5%;
+
+    --ring: 318 100% 50%;
     --radius: 0.5rem;
   }
 
@@ -54,6 +70,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
+
+.bg-gradient { background: var(--gradient) }

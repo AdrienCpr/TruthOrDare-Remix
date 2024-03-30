@@ -5,13 +5,16 @@ import type { MetaFunction } from "@remix-run/node"
 // import { AuthenticityTokenInput } from "remix-utils/csrf/react"
 
 import { Link } from "@remix-run/react"
-import { SetStateAction, useState } from "react"
-
-import DarkModePicker from "~/components/common/dark-mode-picker/dark-mode-picker"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/common/ui/select"
-
+import { useState } from "react"
 import FormPlayers from "~/components/common/form/players"
 import { buttonVariants } from "~/components/common/ui/button"
+import { ToggleGroup, ToggleGroupItem } from "~/components/common/ui/toggle-group"
+import ConfigLevelItem from "~/components/config-level-item/config-level-item"
+import { CanvasRevealEffect } from "~/components/common/ui/canvas-reveal-effect"
+import { EvervaultCard } from "~/components/common/ui/evervault-card"
+import { cn } from "~/utils/cn"
+import { Card, CardContent, CardFooter } from "~/components/common/ui/card"
+import { BackgroundGradientAnimation } from "~/components/common/ui/background-gradient-animation"
 
 // import { useOptionalUser } from "~/utils"
 
@@ -62,49 +65,74 @@ export default function Index() {
   }
   //Fin logique FormPlayers
 
-  const handleTypeQuestionChange = (e: SetStateAction<string>) => {
-    setTypeQuestion(e === "random" ? "" : e)
-    console.log(e)
-  }
-
   return (
-    <main className="relative min-h-screen sm:flex sm:items-center sm:justify-center">
-      <div className="absolute top-[15px] right-[15px]">
-        <DarkModePicker />
-      </div>
-      <div className="relative flex min-h-full flex-col justify-center">
+    <BackgroundGradientAnimation>
+    <main className="relative min-h-screen sm:flex sm:items-center sm:justify-center z-10">
+      <div className="relative flex min-h-full justify-center gap-6">
         <div>
-          <Select onValueChange={e => handleTypeQuestionChange(e)} defaultValue={typeQuestion}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select Type of Questions" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="random">Random Questions</SelectItem>
-              <SelectItem value="PG">Soft Questions</SelectItem>
-              <SelectItem value="PG13">Medium Questions</SelectItem>
-              <SelectItem value="R">Hot Questions</SelectItem>
-            </SelectContent>
-          </Select>
+          <ToggleGroup type="single" onValueChange={setTypeQuestion}  defaultValue={typeQuestion} className="flex flex-col gap-2">
+            <ToggleGroupItem value="random" className="p-0 w-full h-auto data-[state=on]:ring ring-ring bg-emerald-700/50 data-[state=on]:bg-emerald-700/50 data-[state=on]:text-foreground">
+              <ConfigLevelItem title="Aléatoire 🎲🎲🎲" text="ça peut vite partir en sucette..." selected={typeQuestion === "random"}>
+                <CanvasRevealEffect
+                  animationSpeed={3}
+                  containerClassName="bg-emerald-700"
+                  showGradient={false}
+                />
+              </ConfigLevelItem>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="PG" className="p-0 w-full h-auto data-[state=on]:ring ring-ring bg-sky-600/50  data-[state=on]:bg-sky-600/50 data-[state=on]:text-foreground">
+              <ConfigLevelItem title="Maternelle 👦👧👶" text="Pour les bouts de choux" selected={typeQuestion === "PG"}>
+                <CanvasRevealEffect
+                  animationSpeed={3}
+                  containerClassName="bg-sky-600"
+                  colors={[[125, 211, 252]]}
+                  showGradient={false}
+                />
+              </ConfigLevelItem>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="PG13" className="p-0 w-full h-auto data-[state=on]:ring ring-ring bg-red-900/50 data-[state=on]:bg-red-900/50 data-[state=on]:text-foreground">
+              <ConfigLevelItem title="Entre potes 🎉🎉🎉" text="A plusieurs c'est plus fun, non? 😏" selected={typeQuestion === "PG13"}>
+                <CanvasRevealEffect
+                  animationSpeed={3}
+                  containerClassName="bg-red-900"
+                  colors={[[255,46,46]]}
+                  showGradient={false}
+                />
+              </ConfigLevelItem>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="R" className="p-0 w-full h-auto data-[state=on]:ring ring-ring bg-gray-900/50 data-[state=on]:bg-gray-900/50 data-[state=on]:text-foreground">
+            <div
+              className="w-96 h-28 group/canvas-card mx-auto relative"
+            >
+              <EvervaultCard text=" WTF ?!" />
+            </div>
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
-        <FormPlayers
-          players={players}
-          addPlayer={addPlayer}
-          removePlayer={removePlayer}
-          handleChange={handleChange}
-          handleToggleChange={handleToggleChange}
-        />
-        <div className="mt-5 self-center">
-          <Link
-            to={{
-              pathname: "/game",
-              search: `?players=${encodeURIComponent(JSON.stringify(players))}&gameParams=${encodeURIComponent(JSON.stringify({ numberQuestion: numberQuestion, typeQuestion: typeQuestion }))}`
-            }}
-            className={buttonVariants()}
-          >
-            Commencer la partie
-          </Link>
-        </div>
+        <Card className="pb-20 relative bg-card/10 border-none">
+          <CardContent>
+            <FormPlayers
+              players={players}
+              addPlayer={addPlayer}
+              removePlayer={removePlayer}
+              handleChange={handleChange}
+              handleToggleChange={handleToggleChange}
+            />
+          </CardContent>
+          <CardFooter className="absolute bottom-0 w-full">
+            <Link
+              to={{
+                pathname: "/game",
+                search: `?players=${encodeURIComponent(JSON.stringify(players))}&gameParams=${encodeURIComponent(JSON.stringify({ numberQuestion: numberQuestion, typeQuestion: typeQuestion === "random" ? "": typeQuestion }))}`
+              }}
+              className={cn(buttonVariants(), "bg-gradient h-auto w-full text-2xl text-white")}
+            >
+              Jouer 🚀
+            </Link>
+          </CardFooter>
+        </Card>
       </div>
     </main>
+    </BackgroundGradientAnimation>
   )
 }

@@ -7,14 +7,12 @@ interface QuestionProps {
       fr:string
     }
   } | null;
-  handleNextTurn: () => void;
 }
-export default function InterfaceQuestion({ question, handleNextTurn }: QuestionProps) {
+export default function InterfaceQuestion({ question }: QuestionProps) {
   return (
-    <div className="flex-row">
-      <h1>{question?.translations.fr}</h1>
-      <h4>{question?.question}</h4>
-      <Button onClick={handleNextTurn}>Next turn</Button>
+    <div>
+      <div className="text-lg w-full text-center">{question?.translations.fr}</div>
+      <div className="text-sm w-full text-center">{question?.question}</div>
     </div>
   )
 }

@@ -5,9 +5,10 @@ interface FormPlayersProps {
 }
 export default function FormPlayers({ handleChoiceGame }: FormPlayersProps) {
   return (
-    <div className="flex-row">
-      <Button onClick={() => handleChoiceGame("truth")}>Trust</Button>
-      <Button onClick={() => handleChoiceGame("dare")}>Dare</Button>
+    <div className="flex gap-4 items-center">
+      <Button onClick={() => handleChoiceGame("dare")}>Action</Button>
+      <div className="text-sm">Ou</div>
+      <Button onClick={() => handleChoiceGame("truth")}>Vérité</Button>
     </div>
   )
 }

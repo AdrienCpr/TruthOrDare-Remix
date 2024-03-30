@@ -4,14 +4,15 @@ import { LoaderFunctionArgs, redirect } from "@remix-run/node"
 import { Link } from "@remix-run/react"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React, { useState } from "react"
+import { useState } from "react"
 import { typedjson, useTypedLoaderData } from "remix-typedjson"
 
-import DarkModePickerPopover
-  from "~/components/common/dark-mode-picker/dark-mode-picker-popover/dark-mode-picker-popover"
 import SelectGame from "~/components/common/form/select-game"
 import InterfaceQuestion from "~/components/common/interface-question/interface-question"
-import { buttonVariants } from "~/components/common/ui/button"
+import { BackgroundGradientAnimation } from "~/components/common/ui/background-gradient-animation"
+import { Button, buttonVariants } from "~/components/common/ui/button"
+import { Card, CardFooter } from "~/components/common/ui/card"
+import { cn } from "~/utils/cn"
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url)
@@ -52,7 +53,6 @@ export default function GamePage() {
   }
 
   async function fetchQuestion(choiceGame: string) {
-    console.log(gameParams)
     try {
       const response = await fetch("https://api.truthordarebot.xyz/v1/" + choiceGame + "?rating=" + gameParams.typeQuestion)
       if (!response.ok) {
@@ -72,26 +72,31 @@ export default function GamePage() {
 
 
   return (
-    <main className="relative min-h-screen sm:flex sm:items-center sm:justify-center">
-      <div className="absolute top-[15px] right-[15px]">
-        <DarkModePickerPopover />
-        <Link to="/" className={buttonVariants()}>
-          Go Back
-        </Link>
-      </div>
-      <div className="relative flex min-h-full flex-col justify-center">
-        <div>
-          <p>{turnPlayer.value} </p>
+    <BackgroundGradientAnimation>
+    <main className="relative min-h-screen sm:flex sm:items-center sm:justify-center z-10">
+        <div className="absolute top-[15px] left-[15px]">
+          <Link to="/" className={buttonVariants()}>
+            Go Back
+          </Link>
+        </div>
+        <Card className={cn("p-4 relative bg-card/10 border-none space-y-6", !showSelectGame && "pb-28")}>
+          <div className="text-2xl font-semiboldw-full text-center">{turnPlayer.value}</div>
           {showSelectGame ?
             <SelectGame handleChoiceGame={handleChoiceGame} />
             :
-            <InterfaceQuestion question={question}
-                               handleNextTurn={handleNextTurn}
-            />
+            <InterfaceQuestion question={question}/>
           }
-        </div>
-      </div>
+          {!showSelectGame ? (
+            <>
+              <CardFooter className="absolute left-0 bottom-0 right-0">
+                <Button onClick={handleNextTurn} className="bg-gradient h-auto w-full text-2xl text-white">
+                  Tour suivant
+                </Button>
+              </CardFooter>
+            </>
+          ) : null}
+        </Card>
     </main>
-
+    </BackgroundGradientAnimation>
   )
 }
