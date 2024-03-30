@@ -38,14 +38,16 @@ export default function GamePage() {
   // const players = location?.state?.players
 
   function randomTurn() {
-    const randomIndex = Math.floor(Math.random() * players.length)
-    return players[randomIndex]
+    let index = turnPlayer
+    index === players.lenght() ? setTurnPlayer(0) : setTurnPlayer(index++)
+    return players[index]
   }
 
   const [turnPlayer, setTurn] = useState(randomTurn())
   const [showSelectGame, setShowSelectGame] = useState(true)
   const [question, setQuestion] = useState(null)
-
+  const [turnPlayer, setTurnPlayer] = useState(0)
+  
   async function handleChoiceGame(choiceGame: string) {
     const question = await fetchQuestion(choiceGame)
     setQuestion(question)
