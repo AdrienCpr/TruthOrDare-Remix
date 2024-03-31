@@ -37,10 +37,9 @@ export default function GamePage() {
   // const location = useLocation()
   // const players = location?.state?.players
 
-  const [turnPlayer, setTurn] = useState(randomTurn())
+  const [turnPlayer, setTurnPlayer] = useState(0)
   const [showSelectGame, setShowSelectGame] = useState(true)
   const [question, setQuestion] = useState(null)
-  const [turnPlayer, setTurnPlayer] = useState(0)
 
   function randomTurn() {
     let index = turnPlayer
