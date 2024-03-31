@@ -43,7 +43,7 @@ export default function GamePage() {
 
   function randomTurn() {
     let index = turnPlayer
-    index === players.lenght() ? setTurnPlayer(0) : setTurnPlayer(index++)
+    index === players.lenght() ? setTurnPlayer(0) : setTurnPlayer(index + 1)
     return players[index]
   }
   
